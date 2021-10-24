@@ -1,0 +1,11 @@
+<ok>    temp should be editable 
+<ok>    photo should be searchable 
+<ok>    photo should be editable 
+<ok>    the random method for choosing photo
+<ok>    admin login
+adding flash for admin
+user register in main page
+<ok>    adding decorator for admin
+a method for not overlabing temps
+registering in main page by users
+a platform for chatting user 

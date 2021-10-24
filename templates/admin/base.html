@@ -1,0 +1,14 @@
+<header>
+    <a class="button" href="{{url_for('admin.index')}}"> dashboard  </a>
+    <a class="button" href="{{url_for('admin.logout')}}">logout</a>
+</header>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}

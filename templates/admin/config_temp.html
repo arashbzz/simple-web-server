@@ -1,0 +1,44 @@
+{%extends 'base.html' %}
+
+{% block title %} admin_uploadingphoto {% endblock %}
+
+{% block content %}
+{% include 'admin/base.html' %}
+<form action="{{url_for('admin.config_temp')}}" method="POST">
+
+  {{ form.hidden_tag() }}
+
+  maxtemp : {{form.maxtemp}} <br>
+  mintemp : {{form.mintemp}} <br>
+  name : {{form.name}} <br>
+  slug : {{form.slug}} <br>
+  <input type="submit" value="submit">
+</form>
+
+<div>
+  <table class="striped">
+    <tr>
+      <th>name</th>
+      <th>slug</th>
+      <th>maxtemp</th>
+      <th>mintemp</th>
+      <th>Action</th>
+    </tr>
+    {% for temp in temps %}
+    <tr>
+      <td>{{temp.name}}</td>
+      <td>{{temp.slug}}</td>
+      <td>{{temp.maxtemp}}</td>
+      <td>{{temp.mintemp}}</td>
+      <td>
+        <a href="{{url_for('admin.delete_temp', temp_id= temp.id ) }}" class="button"> Delete </a>
+        <a href="{{url_for('admin.edit_temp', temp_id= temp.id ) }}" class="button"> Edit </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+</div>
+
+{% endblock %}

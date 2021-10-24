@@ -1,0 +1,25 @@
+{%extends 'base.html' %}
+
+{% block title %} admin_history {% endblock %}
+
+{% block content %}
+{% include 'admin/base.html' %}
+
+<div>
+  <table class="striped">
+    <tr>
+      <th>first number</th>
+      <th>second number</th>
+
+    </tr>
+    {% for item in history %}
+    <tr>
+      <td>{{item.first_number}}</td>
+      <td>{{item.second_number}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</div>
+
+{% endblock %}

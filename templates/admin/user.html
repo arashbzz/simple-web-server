@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+<title>config user</title>
+{%endblock%}
+
+{% block content%}
+{% include 'admin/base.html' %}
+
+<form action="{{url_for('admin.config_user')}}" method="POST" >
+    {{form.hidden_tag()}}
+
+    user_name: {{ form.user_name}} <br>
+   email: {{ form.email}} <br>
+    password:{{ form.password}} <br>
+   password_re: {{ form.password_re}} <br>
+   role: {{ form.role}} <br>
+    <input type="submit" value="submit">
+</form>
+
+<table>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Action</th>
+    {% for user in users %}
+    <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.user_name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{'admin' if user.role==1 else 'applicant' }}</td>
+        <td>
+            <a href="{{ url_for('admin.user_delete', id=user.id)}}" class="button">delete</a>
+        </td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

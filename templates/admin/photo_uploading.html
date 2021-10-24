@@ -1,0 +1,56 @@
+{%extends 'base.html' %}
+
+{% block title %} admin_uploadingphoto {% endblock %}
+
+{% block content %}
+{% include 'admin/base.html' %}
+
+<form action="{{url_for('admin.upload_photo')}}" method="POST" enctype="multipart/form-data">
+
+    {{ form.hidden_tag() }}
+    {{form.file}}
+    {{form.temp}}
+    <input type="submit" value="upload">
+
+</form>
+
+
+<form action="{{url_for('admin.photo_search')}}" method="GET">
+    {{form.hidden_tag()}}
+    <input name="chara">
+    <input type="submit" value="Search">
+</form>
+
+<form action="{{url_for('admin.photo_filtering', temp=form.temp)}}" method="GET">
+    
+    {{form.temp}}
+    <input type="submit" value="filter">
+</form>
+
+
+
+<table class="striped">
+    <thead>
+        <tr>
+            <th >Condition</th>
+            <th data-label="Name">Photo</th>
+            <th >Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for photo in photoes %}
+        <tr>
+            <td >
+                {{photo.temp[0].name}}
+            </td>
+            <td data-label="Name">
+                <img src="{{url_for('static',filename ='photos/'+ photo.filename)}}" alt="undefiend" width="200" height="200">
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}
