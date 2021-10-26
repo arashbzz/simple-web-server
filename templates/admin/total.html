@@ -6,17 +6,17 @@
 {% include 'admin/base.html' %}
 
 <div>
-  <table class="striped">
-    <tr>
-      <th>total</th>
+    <table class="striped">
+        <tr>
+            <th>total</th>
 
-    </tr>
-    {% for item in history %}
-    <tr>
-      <td>{{item.sum}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+        </tr>
+        {% for item in history %}
+        <tr>
+            <td>{{item.sum}}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
 </div>
 

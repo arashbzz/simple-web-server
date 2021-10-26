@@ -1,14 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import Development
+from flask_redis import FlaskRedis
+from config import Config
 from flask_migrate import Migrate
 
 app = Flask(__name__)
-app.config.from_object(Development)
+app.config.from_object(Config)
 db = SQLAlchemy(app)
+redis_client = FlaskRedis(app)
 migrate = Migrate(app, db)
-
-# from views import index
 
 from main_page import main
 from mod_admin import admin
