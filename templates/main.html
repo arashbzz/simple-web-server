@@ -9,6 +9,14 @@
     second number: {{form.b}} <br>
     <input type="submit" value="answer">
 </form>
-
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 answer = {{answer}}
 {% endblock %}

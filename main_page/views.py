@@ -5,6 +5,7 @@ from .models import SumDb
 from .forms import SumForm
 import time
 
+'''constant  variables.(times are in seconds) '''
 PERMITED_WRONG_REQUEST = 15
 
 BAN_TIME = 10
@@ -13,14 +14,16 @@ PERMITED_REQUEST = 100
 
 PERMITED_TIME = 3600
 
+'''this view is for inputting data in form with using GET method '''
 
 
-
-
-@main.route('/inputing')
-def inputing():
+@main.route('/inputting')
+def inputting_data():
     form = SumForm()
     return render_template('main_get.html', form=form)
+
+
+'''this view would add to number with using GET method.'''
 
 
 @main.route('/sum')
@@ -52,7 +55,8 @@ def sum():
                 start_ban_time = time.time()
                 redis_client.mset({'start_ban_time': start_ban_time})
             if time.time() - start_ban_time < BAN_TIME:
-                flash(f'you have more than {PERMITED_REQUEST} request in less than one hour.you are ban for 1 min. ')
+                flash(
+                    f'you have more than {PERMITED_REQUEST} request in less than one hour.you are ban for {BAN_TIME} seconds. ')
                 return render_template('response.html')
             else:
                 session.clear()
@@ -65,7 +69,7 @@ def sum():
                 start_ban_time = time.time()
                 redis_client.mset({'start_ban_time': start_ban_time})
             if time.time() - start_ban_time < BAN_TIME:
-                flash(f'you request more than {PERMITED_WRONG_REQUEST} wrong.you are ban for 1 min.')
+                flash(f'you request more than {PERMITED_WRONG_REQUEST} wrong.you are ban for {BAN_TIME} seconds.')
                 return render_template('response.html')
             else:
                 session.clear()
@@ -80,11 +84,15 @@ def sum():
         db.session.commit()
         flash(f'answer = {answer}')
         return render_template('response.html')
-    except:
+    except (ValueError, TypeError):
         wrong_request = int(redis_client.get("wrong_request")) + 1
         redis_client.mset({"wrong_request": wrong_request})
         flash('wrong input.')
         return render_template('response.html')
+
+
+'''this view would add to number with using POST method and a form.'''
+
 
 @main.route('/', methods=['POST', 'GET'])
 def index():
@@ -117,7 +125,8 @@ def index():
                 start_ban_time = time.time()
                 redis_client.mset({'start_ban_time': start_ban_time})
             if time.time() - start_ban_time < BAN_TIME:
-                flash(f'you have more than {PERMITED_REQUEST} request in less than one hour.you are ban for 1 min. ')
+                flash(
+                    f'you have more than {PERMITED_REQUEST} request in less than one hour.you are ban {BAN_TIME} seconds. ')
                 return render_template('response.html')
             else:
                 session.clear()
@@ -130,7 +139,7 @@ def index():
                 start_ban_time = time.time()
                 redis_client.mset({'start_ban_time': start_ban_time})
             if time.time() - start_ban_time < BAN_TIME:
-                flash(f'you request more than {PERMITED_WRONG_REQUEST} wrong.you are ban for 1 min.')
+                flash(f'you request more than {PERMITED_WRONG_REQUEST} wrong.you are ban for {BAN_TIME} seconds.')
                 return render_template('response.html')
             else:
                 session.clear()
@@ -146,8 +155,9 @@ def index():
                 db.session.add(newdata)
                 db.session.commit()
                 return render_template('main.html', form=form, answer=answer)
-            except:
+            except (ValueError, TypeError):
                 wrong_request = int(redis_client.get("wrong_request")) + 1
                 redis_client.mset({"wrong_request": wrong_request})
+                flash('wrong input.')
 
     return render_template('main.html', form=form)
